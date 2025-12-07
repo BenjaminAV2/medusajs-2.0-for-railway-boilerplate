@@ -193,9 +193,6 @@ class MinioFileProviderService extends AbstractFileProviderService {
       const parsedFilename = path.parse(file.filename)
       const fileKey = `${parsedFilename.name}-${ulid()}${parsedFilename.ext}`
       
-      // Debug logging to identify the issue
-      this.logger_.info(`File content type: ${typeof file.content}, isBuffer: ${Buffer.isBuffer(file.content)}, constructor: ${file.content?.constructor?.name}`)
-      
       // Handle different content types properly
       let content: Buffer
       if (Buffer.isBuffer(file.content)) {
@@ -211,8 +208,6 @@ class MinioFileProviderService extends AbstractFileProviderService {
         // Handle ArrayBuffer, Uint8Array, or any other buffer-like type
         content = Buffer.from(file.content as any)
       }
-      
-      this.logger_.info(`Final buffer length: ${content.length}`)
 
       // Upload file with public-read access
       await this.client.putObject(
