@@ -192,7 +192,27 @@ class MinioFileProviderService extends AbstractFileProviderService {
     try {
       const parsedFilename = path.parse(file.filename)
       const fileKey = `${parsedFilename.name}-${ulid()}${parsedFilename.ext}`
-      const content = Buffer.from(file.content, 'binary')
+      
+      // Debug logging to identify the issue
+      this.logger_.info(`File content type: ${typeof file.content}, isBuffer: ${Buffer.isBuffer(file.content)}, constructor: ${file.content?.constructor?.name}`)
+      
+      // Handle different content types properly
+      let content: Buffer
+      if (Buffer.isBuffer(file.content)) {
+        content = file.content
+      } else if (typeof file.content === 'string') {
+        // If it's a base64 string, decode it
+        if (file.content.match(/^[A-Za-z0-9+/]+=*$/)) {
+          content = Buffer.from(file.content, 'base64')
+        } else {
+          content = Buffer.from(file.content, 'binary')
+        }
+      } else {
+        // Handle ArrayBuffer, Uint8Array, or any other buffer-like type
+        content = Buffer.from(file.content as any)
+      }
+      
+      this.logger_.info(`Final buffer length: ${content.length}`)
 
       // Upload file with public-read access
       await this.client.putObject(
