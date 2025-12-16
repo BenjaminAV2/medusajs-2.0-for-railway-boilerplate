@@ -23,7 +23,6 @@ import {
   MEILISEARCH_HOST,
   MEILISEARCH_ADMIN_KEY
 } from 'lib/constants';
-import { ORDER_STATUS_MODULE } from './src/modules/order-status';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
@@ -57,9 +56,6 @@ const medusaConfig = {
     disable: SHOULD_DISABLE_ADMIN,
   },
   modules: {
-    [ORDER_STATUS_MODULE]: {
-      resolve: "./src/modules/order-status",
-    },
     file: {
       resolve: "@medusajs/file-local",
       options: {
