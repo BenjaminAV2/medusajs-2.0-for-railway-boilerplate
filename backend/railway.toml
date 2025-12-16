@@ -1,0 +1,6 @@
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+
+[proxy]
+clientMaxBodySize = "50mb"
