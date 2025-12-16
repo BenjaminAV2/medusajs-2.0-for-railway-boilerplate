@@ -27,6 +27,9 @@ import {
 loadEnv(process.env.NODE_ENV, process.cwd());
 
 const medusaConfig = {
+  serverConfig: {
+    bodySizeLimit: 20 * 1024 * 1024, // 20 MB
+  },
   projectConfig: {
     databaseUrl: DATABASE_URL,
     databaseLogging: false,
@@ -69,7 +72,8 @@ const medusaConfig = {
             id: 'local',
             options: {
               upload_dir: 'static',
-              backend_url: `${BACKEND_URL}/static`
+              backend_url: `${BACKEND_URL}/static`,
+              maxFileSize: 20 * 1024 * 1024, // 20 MB
             }
           }])
         ]
