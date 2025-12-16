@@ -54,9 +54,6 @@ const medusaConfig = {
   admin: {
     backendUrl: BACKEND_URL,
     disable: SHOULD_DISABLE_ADMIN,
-    upload: {
-      maxFileSize: 20 * 1024 * 1024, // 20 MB
-    },
   },
   modules: {
     file: {
