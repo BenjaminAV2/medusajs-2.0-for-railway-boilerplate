@@ -40,7 +40,10 @@ const medusaConfig = {
       authCors: AUTH_CORS,
       storeCors: STORE_CORS,
       jwtSecret: JWT_SECRET,
-      cookieSecret: COOKIE_SECRET
+      cookieSecret: COOKIE_SECRET,
+      bodyParser: {
+        sizeLimit: "20MB",
+      },
     },
     build: {
       rollupOptions: {
