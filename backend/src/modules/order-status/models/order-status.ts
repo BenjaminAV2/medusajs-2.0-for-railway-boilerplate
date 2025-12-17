@@ -50,10 +50,6 @@ const OrderStatus = model.define("order_status", {
   // Notes and metadata
   notes: model.text().nullable(),
   metadata: model.json().nullable(),
-
-  // Timestamps
-  created_at: model.dateTime(),
-  updated_at: model.dateTime(),
 })
 
 export default OrderStatus

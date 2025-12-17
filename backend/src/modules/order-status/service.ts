@@ -77,7 +77,6 @@ class OrderStatusModuleService extends MedusaService({
     const now = new Date()
     const updateData: Record<string, unknown> = {
       ...data,
-      updated_at: now,
     }
 
     // Auto-set timestamps based on status changes
@@ -106,9 +105,8 @@ class OrderStatusModuleService extends MedusaService({
     } else {
       return this.createOrderStatus({
         order_id: orderId,
-        created_at: now,
         ...updateData,
-      })
+      } as any)
     }
   }
 
