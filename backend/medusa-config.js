@@ -56,6 +56,9 @@ const medusaConfig = {
     disable: SHOULD_DISABLE_ADMIN,
   },
   modules: {
+    orderStatusModuleService: {
+      resolve: "./src/modules/order-status",
+    },
     file: {
       resolve: "@medusajs/file-local",
       options: {
