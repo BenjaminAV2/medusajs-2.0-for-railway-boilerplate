@@ -59,11 +59,18 @@ const medusaConfig = {
     orderStatusModuleService: {
       resolve: "./src/modules/order-status",
     },
-    file: {
-      resolve: "@medusajs/file-local",
+    [Modules.FILE]: {
+      resolve: "@medusajs/file",
       options: {
-        upload_dir: "uploads",
-        maxFileSize: 20 * 1024 * 1024, // 20 MB
+        providers: [
+          {
+            resolve: "@medusajs/file-local",
+            id: "local",
+            options: {
+              upload_dir: "uploads",
+            },
+          },
+        ],
       },
     },
     ...(REDIS_URL ? {
