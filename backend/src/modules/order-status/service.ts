@@ -52,7 +52,7 @@ class OrderStatusModuleService extends MedusaService({
    * Get order status by order ID
    */
   async getByOrderId(orderId: string) {
-    const [status] = await this.listOrderStatuses({ order_id: orderId })
+    const [status] = await this.listOrderStatus({ order_id: orderId })
     return status || null
   }
 
@@ -102,9 +102,9 @@ class OrderStatusModuleService extends MedusaService({
     }
 
     if (existing) {
-      return this.updateOrderStatuses({ id: existing.id }, updateData)
+      return this.updateOrderStatus({ id: existing.id }, updateData)
     } else {
-      return this.createOrderStatuses({
+      return this.createOrderStatus({
         order_id: orderId,
         created_at: now,
         ...updateData,

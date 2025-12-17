@@ -100,7 +100,7 @@ export async function DELETE(
     return
   }
 
-  await orderStatusService.deleteOrderStatuses(status.id)
+  await orderStatusService.deleteOrderStatus(status.id)
 
   res.json({
     id: status.id,

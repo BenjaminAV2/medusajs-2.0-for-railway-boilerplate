@@ -38,7 +38,7 @@ export async function POST(
     offset?: number
   }
 
-  const [statuses, count] = await orderStatusService.listAndCountOrderStatuses(
+  const [statuses, count] = await orderStatusService.listAndCountOrderStatus(
     filters,
     {
       skip: offset,
