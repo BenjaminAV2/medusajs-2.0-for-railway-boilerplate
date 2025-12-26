@@ -5,20 +5,29 @@ import { Modules } from "@medusajs/framework/utils"
  * Custom endpoint to convert a draft order to a regular order
  * without inventory checks (for custom/unlimited stock products)
  *
- * POST /admin/draft-orders/:id/convert
+ * POST /admin/convert-draft-order
+ * Body: { order_id: string }
  */
 export async function POST(
   req: MedusaRequest,
   res: MedusaResponse
 ): Promise<void> {
-  const { id } = req.params
+  const { order_id } = req.body as { order_id: string }
+
+  if (!order_id) {
+    res.status(400).json({
+      success: false,
+      error: "order_id is required",
+    })
+    return
+  }
 
   try {
     // Get the order module service
     const orderModuleService = req.scope.resolve(Modules.ORDER)
 
     // Get the draft order
-    const draftOrder = await orderModuleService.retrieveOrder(id, {
+    const draftOrder = await orderModuleService.retrieveOrder(order_id, {
       relations: [
         "items",
         "items.tax_lines",
@@ -51,7 +60,7 @@ export async function POST(
 
     // Update the order status to convert it from draft
     // In Medusa V2, we change the status to mark it as a real order
-    const updatedOrder = await orderModuleService.updateOrders(id, {
+    const updatedOrder = await orderModuleService.updateOrders(order_id, {
       status: "pending",
       metadata: {
         ...draftOrder.metadata,
